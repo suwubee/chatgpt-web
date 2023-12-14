@@ -1,3 +1,5 @@
+# 将大部分远程文件加载到本地了，经测试不支持dall-e，所以去掉了
+
 # chatgpt-web
 Pure Javascript ChatGPT demo based on OpenAI API 
 
@@ -20,78 +22,7 @@ Pure Javascript ChatGPT demo based on OpenAI API
 
 ## Demo
 
-[在线预览](https://xqdoo00o.github.io/chatgpt-web/) （使用需配置自定义API key和自定义接口）
-
-## 使用方法
-### **注意：部署反代接口请注意OpenAI的[支持地区](https://platform.openai.com/docs/supported-countries)，部署在不支持地区的服务器可能导致封号！最好配置https，公网以http方式明文传输API key非常不安全！**
-___
-- **仅部署HTML**
-
-    使用任意http server部署index.html。打开网页设置，填写自定义API Key，自定义接口，当本地
-
-    - 可正常访问`api.openai.com`，填写`https://api.openai.com/`
-
-    - 不可正常访问`api.openai.com`，填写其反代地址（可使用[Cloudflare Worker](https://github.com/xqdoo00o/openai-proxy)等反代），注意：反代接口响应需添加跨域Header `Access-Control-Allow-Origin`
-- **同时部署HTML和OpenAI反代接口**
-
-    **注意：服务器需正常访问`api.openai.com`，网页不用设置自定义接口了**
-    - 使用nginx，示例配置如下
-
-        ```
-        server {
-            listen       80;
-            server_name  example.com;
-            #开启openai接口的gzip压缩，大量重复文本的压缩率高，节省服务端流量
-            gzip  on;
-            gzip_min_length 1k;
-            gzip_types text/event-stream;
-
-            #如需部署在网站子路径，如"example.com/chatgpt"，配置如下
-            #location ^~ /chatgpt/v1 {
-            location ^~ /v1 {
-                proxy_pass https://api.openai.com/v1;
-                proxy_set_header Host api.openai.com;
-                proxy_ssl_name api.openai.com;
-                proxy_ssl_server_name on;
-                #注意Bearer 后改为正确的token。如需网页设置自定义API key使用，则注释掉下一行
-                proxy_set_header  Authorization "Bearer sk-your-token";
-                proxy_pass_header Authorization;
-                #流式传输，不关闭buffering缓存会卡顿卡死，必须配置！！！
-                proxy_buffering off;
-            }
-            #与上面反代接口的路径保持一致
-            #location /chatgpt {
-            location / {
-                alias /usr/share/nginx/html/;
-                index index.html;
-            }
-        }
-        ```
-        如服务器无法正常访问`api.openai.com`，可配合socat反代和http代理使用，proxy_pass配置改成
-        ```
-        proxy_pass https://127.0.0.1:8443/v1;
-        ```
-        并打开socat
-        ```
-        socat TCP4-LISTEN:8443,reuseaddr,fork PROXY:http代理地址:api.openai.com:443,proxyport=http代理端口
-        ```
-    - 使用Caddy，可以自动生产HTTPS证书，示例配置如下
-
-        ```
-        yourdomain.example.com {
-            reverse_proxy /v1/* https://api.openai.com {
-                header_up Host api.openai.com
-                header_up Authorization "{http.request.header.Authorization}"
-                header_up Authorization "Bearer sk-your-token"
-            }
-
-            file_server / {
-                root /var/wwwroot/chatgpt-web
-                index index.html
-            }
-        }
-        ```
-        **Caddy 2.6.5及之后版本支持https_proxy和http_proxy环境变量，如服务器无法正常访问`api.openai.com`，可先设置代理环境变量**
+[在线预览](https://suwubee.github.io/chatgpt-web/) （使用需配置自定义API key和自定义接口）
 
 ## 自定义选项
 
