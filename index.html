@@ -2454,11 +2454,10 @@
                             <label for="preSetModel" data-i18n-key="gptModel"></label>
                             <select id="preSetModel">
                                 <option value="gpt-3.5-turbo">GPT-3.5</option>
-                                <option value="gpt-3.5-turbo-16k">GPT-3.5-16K</option>
                                 <option value="gpt-4">GPT-4</option>
-                                <option value="gpt-4-browsing" data-i18n-key="gptBrowsing"></option>
-                                <option value="gpt-4-dalle">GPT-4-DALLE</option>
-                                <option value="gpt-4-32k">GPT-4-32K</option>
+                                <option value="gpt-4-vision-preview" data-i18n-key="gptBrowsing">GPT-4-turbo</option>
+                                <option value="SparkDesk">讯飞星火</option>
+                                <option value="dall-e-3">Dall-E 3</option>
                             </select>
                         </div>
                         <div>
@@ -3019,7 +3018,7 @@
         const isMobile = navigator.userAgent.match(/iPhone|iPad|iPod|Android|BlackBerry|webOS/);
         if (isMobile) {
             const script = document.createElement("script");
-            script.src = "https://cdn.jsdelivr.net/gh/timruffles/mobile-drag-drop@3.0.0-rc.0/release/index.min.js";
+            script.src = "./static/index.min.js";
             script.crossOrigin = "anonymous";
             script.defer = true;
             script.onload = () => {
@@ -3029,7 +3028,7 @@
             const link = document.createElement("link");
             link.crossOrigin = "anonymous";
             link.rel = "stylesheet";
-            link.href = "https://cdn.jsdelivr.net/gh/timruffles/mobile-drag-drop@3.0.0-rc.0/release/default.css";
+            link.href = "./static/default.css";
             document.body.appendChild(link);
         }
         let envAPIEndpoint, envAPIKey;
@@ -6952,7 +6951,7 @@
             }, 10000);
             preEle.options.length = 5;
             if (locale === "zh") {
-                fetch("https://cdn.jsdelivr.net/gh/PlexPt/awesome-chatgpt-prompts-zh/prompts-zh.json", {
+                fetch("./static/prompts-zh.json", {
                     signal: downRoleController.signal
                 }).then(async (response) => {
                     let res = await response.json();
@@ -6966,7 +6965,7 @@
                     }
                 }).catch(e => { })
             } else {
-                fetch("https://cdn.jsdelivr.net/gh/f/awesome-chatgpt-prompts/prompts.csv", {
+                fetch("./static/prompts.csv", {
                     signal: downRoleController.signal
                 }).then(async (response) => {
                     let res = await response.text();
