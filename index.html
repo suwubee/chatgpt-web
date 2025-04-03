@@ -3465,10 +3465,10 @@
         speechServiceEle.dispatchEvent(new Event("change"));
     </script>
     <script crossorigin="anonymous"
-        src="https://fastly.jsdelivr.net/npm/markdown-it@14.1.0/dist/markdown-it.min.js"></script>
+        src="assets/js/markdown-it.min.js"></script>
     <script crossorigin="anonymous"
-        src="https://fastly.jsdelivr.net/gh/highlightjs/cdn-release@11.11.1/build/highlight.min.js"></script>
-    <script crossorigin="anonymous" src="https://fastly.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.js"></script>
+        src="assets/js/highlight.min.js"></script>
+    <script crossorigin="anonymous" src="assets/js/katex.min.js"></script>
     <script>
         const API_URL = "v1/chat/completions";
         const DeepSeek_API_URL = "chat/completions";
@@ -3697,7 +3697,7 @@
                     loadingMermaid = true;
                     let script = document.createElement("script");
                     script.crossOrigin = "anonymous";
-                    script.src = "https://fastly.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js";
+                    script.src = "assets/js/mermaid.min.js";
                     script.onload = async () => {
                         loadingMermaid = false;
                         mermaid.mermaidAPI.initialize({
