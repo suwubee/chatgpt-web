@@ -513,6 +513,10 @@ body {
     color: var(--lighter-text-color);
 }
 
+.m-mdic-copy-wrapper:hover .u-mdic-copy-btn {
+    opacity: 1;
+}
+
 #stopChat {
     display: none;
     margin: 0 auto;
@@ -2235,4 +2239,30 @@ section.eqno>eqn {
 section.eqno>span {
     width: 3em;
     text-align: right;
+}
+
+.m-mdic-copy-wrapper button.u-mdic-render-btn {
+    position: relative;
+    top: 0;
+    right: 0;
+    margin-left: 5px;
+    padding: 3px 6px;
+    border: 0;
+    border-radius: 3px;
+    background-color: rgba(0, 0, 0, 0.05);
+    font-family: system-ui;
+    font-size: 12px;
+    line-height: 18px;
+    color: #bbb;
+    outline: none;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.m-mdic-copy-wrapper button.u-mdic-render-btn:hover {
+    background-color: var(--active-btn);
+}
+
+.m-mdic-copy-wrapper:hover .u-mdic-render-btn {
+    opacity: 1;
 }
