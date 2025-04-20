@@ -479,10 +479,10 @@ const formatAvatarEle = (ele, model) => {
     if (ele.parentElement.className === "request") {
         ele.innerHTML = `<img src="${userAvatar}" />`;
     } else {
-        if (model.startsWith("gpt") || model.startsWith("o")) {
+        if (model.startsWith("gpt") || model.startsWith("o") || model === "deepseek-v3") {
             ele.classList.add("gptAvatar")
             ele.innerHTML = `<svg width="24" height="24"><use xlink:href="#aiIcon"></use></svg>`;
-        } else if (model.startsWith("deepseek")) {
+        } else if (model.startsWith("deepseek|")) {
             ele.innerHTML = `<svg width="30" height="30"><use xlink:href="#deepseekIcon"></use></svg>`;
         } else if (model.startsWith("azure")) {
             ele.innerHTML = `<svg width="30" height="30"><use xlink:href="#azureAIIcon"></use></svg>`;
@@ -1781,7 +1781,15 @@ const initSetting = () => {
     const modelsEle = Array.from(modelSetEle.children);
     let localModelName = localStorage.getItem("modelVersion");
     let isVailModel = modelsEle.some(item => item.dataset.value === localModelName)
-    modelVersion = isVailModel ? localModelName : "gpt-4o";
+    
+    // 优先使用环境变量中的模型（如从URL参数获取的）
+    if (typeof envAPIModel !== 'undefined' && envAPIModel) {
+        modelVersion = envAPIModel;
+        console.log("使用环境变量中指定的模型:", modelVersion);
+    } else {
+        modelVersion = isVailModel ? localModelName : "gpt-4o";
+    }
+    
     const applyModelVersion = () => {
         let activedEle = modelSetEle.querySelector(".activeModel");
         if (activedEle) activedEle.classList.remove("activeModel");
@@ -1807,7 +1815,7 @@ const initSetting = () => {
 
             // 根据模型名称前缀推断类型 (可以扩展)
             // 注意：这里的判断逻辑需要根据您实际支持的自定义模型命名规则调整
-            if (modelVersion.startsWith("deepseek")) {
+            if (modelVersion.startsWith("deepseek|")) {
                 customDOM = document.getElementById('customDeepSeekDOM');
                 inferredType = 2;
                 iconHref = "#deepseekIcon";
